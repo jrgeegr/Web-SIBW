@@ -1,0 +1,72 @@
+
+/* 1. Configuración de página y colores */
+body {
+    padding:30px;
+    background-color: white;
+    color: black;
+    font-family: Arial, serif; /* Tipografía clara */
+}
+
+/* Limpieza de cabecera */
+.cabecera {   
+    display:flex;
+    justify-content: space-between; /*Distribuye los espacios de los elementos*/
+    background-color: white;
+    border-bottom: 2px solid black;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Cambio el orden de aparición del titulo y logo */
+.nombre-sitio {
+    order: 1;
+}
+
+.logo {
+    order: 2;
+}
+
+/* OCULTAR ELEMENTOS: No deben aparecer menús ni redes */
+.menu-lateral,
+.redes-sociales,
+.enlaces-cabecera,
+.enlaces-pie {
+    display: none;
+}
+
+
+/* FOTOS: Blanco y negro y tamaño reducido */
+img {
+    filter: grayscale(100%);
+    border: 1px solid #333;
+    max-height: 250px; /* Tamaño reducido según enunciado */
+    width: auto;
+}
+
+
+
+/*Texto de la noticia: Tipografía clara y reducida */
+.cuerpo-noticia p {
+    font-size: 12pt; /* Tamaño estándar de lectura en papel */
+    line-height: 1.4;
+}
+
+.datos-tecnicos {
+    background-color: #eee;
+    border: 1px solid #000;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.galeria-noticia {
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.copyright {
+    float: right;
+    padding: 10px 20px;
+    background-color: #eee;
+
+    border: 1px solid #868686;
+}

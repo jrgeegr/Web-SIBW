@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-gestion">
+    <h1>Gestión de Noticias</h1>
+    
+    <a href="editar_noticia.php?id=0" class="boton-gestion">Añadir nueva noticia</a>
+
+    <div class="seccion-busqueda">
+        <form action="gestion_noticias.php" method="GET" class="form-busqueda-doble" id="form-busqueda-noticias">
+            <div class="grupo-busqueda">
+                <label for="busqueda_titulo">Buscar por Título:</label>
+                <input type="text" name="busqueda_titulo" id="busqueda_titulo" 
+                    value="{{ busqueda_titulo }}" placeholder="Ej: Obras en el centro...">
+            </div>
+
+            <div class="grupo-busqueda">
+                <label for="busqueda_cuerpo">Buscar por Cuerpo:</label>
+                <input type="text" name="busqueda_cuerpo" id="busqueda_cuerpo" 
+                    value="{{ busqueda_cuerpo }}" placeholder="Ej: Contenido de la noticia...">
+            </div>
+
+            <div class="grupo-busqueda">
+                <label>Hashtag:</label>
+                <input type="text" name="busqueda_hashtag" id="busqueda_hashtag" value="{{ busqueda_hashtag }}" placeholder="Sin almohadilla">
+            </div>
+
+            <button type="submit" class="boton-buscar">Buscar Noticias</button>
+            <a href="gestion_noticias.php" class="boton-limpiar">Limpiar</a>
+        </form>
+    </div>
+
+    <table class="tabla-gestion">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Hashtags</th>
+                <th>¿Publicado?</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpo-tabla-noticias">
+            {% for n in noticias %}
+            <tr>
+                <td>{{ n.titulo }}</td>
+                <td>{{ n.fecha_pub }}</td>
+                <td>
+                    {% if n.lista_hashtags %}
+                        <span class="tags-tabla">
+                            {% set array_tags = n.lista_hashtags|split(', ') %}
+                            {% for tag in array_tags %}
+                                #{{ tag }} 
+                            {% endfor %}
+                        </span>
+                    {% else %}
+                        <span class="sin-datos">Ninguno</span>
+                    {% endif %}
+                </td>
+                <td class="texto-centrado">
+                    <input type="checkbox" 
+                           class="check-publicado" 
+                           data-id="{{ n.id }}" 
+                           {% if n.publicado == 1 %}checked{% endif %}>
+                </td>
+                <td>
+                    <a href="editar_noticia.php?id={{ n.id }}">Editar</a> | 
+                    <a href="gestion_noticias.php?borrar={{ n.id }}" onclick="return confirm('¿Borrar noticia?')">Borrar</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No se encontraron noticias con los filtros aplicados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="enlace-secundario">
+        <a href="portada.php">Volver a la Portada</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="js/buscar_gestion.js" defer></script>
+{% endblock %}

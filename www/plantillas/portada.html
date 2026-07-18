@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="modulo-portada-bloque">
+
+    <div class="contenedor-buscador-google">
+        <input type="text" id="buscador-google" placeholder="Buscar noticias..." autocomplete="off">
+        <ul id="desplegable-coincidencias" class="desplegable-oculto"></ul>
+    </div>
+
+    <main class="rejilla-noticias">
+        {% for n in noticias %}
+            <article class="noticia">
+                <a href="noticia.php?id={{ n.id }}">
+                    <img src="{{ n.ruta_foto }}" alt="{{ n.titulo }}">
+                    <h3>{{ n.titulo }}</h3>
+                </a>
+            </article>
+        {% endfor %}
+    </main>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="js/buscador_portada.js" defer></script>
+{% endblock %}

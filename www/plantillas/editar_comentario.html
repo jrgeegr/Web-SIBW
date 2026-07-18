@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>Editar Comentario</h2>
+
+    {% if mensaje_exito %}
+        <p>{{ mensaje_exito }}</p>
+        <a href="gestion_comentarios.php">Volver a la gestión</a>
+    {% else %}
+        <form action="editar_comentario.php?id={{ comentario.id }}" method="POST" class="formulario-estilo">
+            <div class="campo">
+                <label>Autor: {{ comentario.autor }}</label>
+            </div>
+            <div class="campo">
+                <label for="texto">Texto del comentario:</label>
+                <textarea id="texto" name="texto" rows="5" required>{{ comentario.texto }}</textarea>
+            </div>
+            <button type="submit" class="boton-registro">Guardar cambios</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

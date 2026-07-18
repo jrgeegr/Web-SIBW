@@ -1,0 +1,18 @@
+# Configuración local de Docker (Variables de entorno)
+.env
+
+# Datos y logs de los contenedores
+data/
+data_final/
+logs/
+.docker/
+
+# Dependencias de PHP (Composer)
+www/vendor/
+vendor/
+
+# Archivos del sistema operativo o editores
+.DS_Store
+.idea/
+.vscode/
+*.log

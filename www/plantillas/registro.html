@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>Registro de Usuario</h2>
+
+    {% if error %}
+        <div class="alerta-error" style="color: red; background: #fee; padding: 10px; margin-bottom: 20px; border-radius: 5px; text-align: center; border: 1px solid red;">
+            {{ error }}
+        </div>
+    {% endif %}
+    
+    <form action="registro.php" method="POST" class="formulario-estilo" id="formRegistro">
+        <div class="campo">
+            <label for="nombre">Nombre Completo:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+
+        <div class="campo">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="campo">
+            <label for="pass">Contraseña:</label>
+            <input type="password" id="pass" name="pass" required minlength="4">
+        </div>
+
+        <div class="campo">
+            <label for="pass2">Repetir Contraseña:</label>
+            <input type="password" id="pass2" name="pass2" required minlength="4">
+        </div>
+
+        <button type="submit" class="boton-registro">Crear Cuenta</button>
+    </form>
+    
+    <div class="enlace-secundario">
+        ¿Ya tienes una cuenta? <a href="login.php">Inicia sesión</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('formRegistro').onsubmit = function(e) {
+        const p1 = document.getElementById('pass').value;
+        const p2 = document.getElementById('pass2').value;
+
+        if (p1 !== p2) {
+            alert("Las contraseñas no coinciden en el formulario.");
+            e.preventDefault();
+        }
+    };
+</script>
+{% endblock %}

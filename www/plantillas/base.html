@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>{% block titulo %}Noticias Ayuntamiento de Don Benito{% endblock %}</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ logo }}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <header class="cabecera">
+        <div class="logo">
+            <a href="portada.php">
+                <img src="{{ logo }}" alt="Logo Ayuntamiento">
+            </a>
+        </div>
+        <div class="nombre-sitio">
+            <h1>Incidencias Don Benito</h1>
+        </div>
+        <nav class="enlaces-cabecera">
+            <ul>    
+                    {% if session.user_id %}
+                    {# Si el usuario ha iniciado sesión #}
+                    <li class="enlace-cabecera">
+                        <span style="color: #333; font-size: 0.9rem;">
+                            Hola, <strong>{{ session.user_name }}</strong> ({{ session.user_rol }})
+                        </span>
+                    </li>
+                    <li class="enlace-cabecera"><a href="https://www.donbenito.es/" class="enlace">Ayuntamiento</a></li>
+                    <li class="enlace-cabecera">
+                        <a href="logout.php" class="enlace" style="color: #d32f2f;" onclick="return confirm('¿Estás completamente seguro de que quieres cerrar sesión?')">Cerrar sesión</a>
+                    </li>
+                {% else %}
+                    {# Si es un invitado #}
+                    <li class="enlace-cabecera"><a href="https://www.donbenito.es/" class="enlace">Ayuntamiento</a></li>
+                    <li class="enlace-cabecera"><a href="login.php" class="enlace">Iniciar Sesión</a></li>
+                    <li class="enlace-cabecera"><a href="registro.php" class="enlace">Registrarse</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contenedor-principal">
+        <aside class="menu-lateral">
+            <ul>
+                {# Menús comunes: Siempre visibles #}
+                <li class="menu"><a href="portada.php" class="boton-menu">Portada</a></li>
+
+                {% if session.user_id %}
+                    {# Menús para TODOS los usuarios logueados #}
+                    <li class="menu"><a href="mi_perfil.php" class="boton-menu">Mis Datos</a></li>
+
+                    {# Menús para MODERADORES y ROOT #}
+                    {% if session.user_rol in ['moderador', 'root'] %}
+                        <li class="menu"><a href="gestion_comentarios.php" class="boton-menu">Gestionar Comentarios</a></li>
+                    {% endif %}
+
+                    {# Menús para GESTORES y superiores (Root) #}
+                    {% if session.user_rol in ['gestor', 'root'] %}
+                        <li class="menu"><a href="gestion_noticias.php" class="boton-menu">Gestionar Noticias</a></li>
+                    {% endif %}
+
+                    {# Menús EXCLUSIVOS para ROOT #}
+                    {% if session.user_rol == 'root' %}
+                        <li class="menu"><a href="gestion_usuarios.php" class="boton-menu">Gestionar Usuarios</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </aside>
+
+        {% block contenido %}{% endblock %}
+    </div>
+
+    <footer class="pie-pagina">
+        <div class="enlaces-pie">
+            <a href="#">Jorge García Rubio - SIBW</a>
+            <a href="https://www.donbenito.es">Web Ayuntamiento</a>
+            <a href="#">Aviso Legal</a>
+        </div>
+        <p class="copyright">&copy; 2026 Copyright</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

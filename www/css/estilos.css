@@ -1,0 +1,954 @@
+/* 1. Configuración General */
+* {     /*Selector universal*/
+    font-family: "Nunito", sans-serif;
+    box-sizing: border-box; /*Asegura que el padding y bordes no sumen ancho extra*/
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    display: flex;
+    flex-direction: column; /* Apila los elementos uno debajo de otro*/
+    min-height: 100vh; /* Obliga al body a ocupar el 100% de la pantalla y mantener abajo el footer*/
+}
+
+/* 2. Zona de Encabezado */
+.cabecera {
+    display: flex; /* Uso de Flexbox en horizontal */
+    flex-direction: row;
+    justify-content: space-between; /*Distribuye los espacios de los elementos*/
+    align-items: center; /*Centra cada elemento verticalmente dentro de la cabecera*/
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 2px solid #004587; /* Color corporativo sugerido */
+}
+
+.logo, 
+.nombre-sitio, 
+.enlaces-cabecera {
+    flex: 1; /* Las tres secciones miden exactamente lo mismo */
+}
+
+.logo img {
+    margin-left: 10px;
+    width: 150px;
+    /* Para manejar fondos blancos si no es transparente */
+    mix-blend-mode: multiply;
+}
+
+.nombre-sitio h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #333;
+  
+}
+
+.enlaces-cabecera {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Empuja el bloque de la lista a la derecha */
+    margin-right: 10px;
+}
+
+.enlace-cabecera {
+    padding: 3px;
+    display: flex; /* Necesario para que el hijo <a> pueda estirarse */
+}
+
+.enlace {
+    flex: 1; /* Esto hace que todos los botones se estiren igual */
+    padding: 8px 15px;
+    background-color: #004587;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.enlace:hover {
+    background-color: #d3b50a;
+}
+
+
+/* 3. Estructura Principal (Grid Layout) */
+.contenedor-principal {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Columna fija para menú 200 y el resto para noticias: 1fr */
+    flex: 1; /* Para que se estire todo lo posible y deje el pie de página abajo */
+}
+
+/* 4. Menú Lateral (Estilo Botones) */
+.menu-lateral {
+    background-color: #e9e9e9;
+    padding: 20px;
+    background: linear-gradient(rgba(233, 233, 233, 0.8), #004587), url('https://www.transparenttextures.com/patterns/brushed-alum.png');
+    
+    /* Esta línea es la clave: mezcla el patrón con los colores del degradado */
+    background-blend-mode: overlay;;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 10px /*Espacio entre botones*/
+}
+
+.boton-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /*Espacio texto-borde boton*/
+    background-color: #004587;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.1rem;
+    border-radius: 25px; /*Redondeado del boton*/
+    transition: background 0.3s;
+}
+
+.boton-menu:hover {
+    background-color: #d3b50a;
+}
+
+/* 5. Zona Principal: Rejilla de Noticias */
+.rejilla-noticias {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); /* 4 elementos por fila, 1fr hace que cada elemento ocupe una fracción igual, adaptándose al ancho de la pantalla */ 
+    gap: 20px; /*Separación entre cajas*/
+    padding: 20px; /*Separación entre cajas-borde zona principal*/
+    align-content: start;
+}
+
+.noticia {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.noticia img {
+    width: 100%; /* Ocupar todo el ancho */
+    height: 250px; /*Alto exacto*/
+    object-fit: cover; /*Para que no se estire la foto, recorta la imagen si es necesario*/
+    margin-bottom: 8px;
+}
+
+.noticia h3 {
+    font-size: 19px;
+    color: #444;
+}
+
+/* 6. Zona del Pie */
+.pie-pagina {
+    background-color: #4b4b4b;
+    color: white;
+    padding: 20px; /*Espacio bordes pie-elementos*/
+}
+
+.enlaces-pie {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-bottom: 10px;
+}
+
+.enlaces-pie a {
+    color: white;
+    text-decoration: none; /*No salga subrayado*/
+    font-size: 16px;
+    flex: 1; /*Los tres elementos ocupan lo mismo*/
+}
+
+/* Alineamos cada texto en su posición dentro de su tercio */
+.enlaces-pie a:nth-child(1) {
+    text-align: left;    /* Nombre a la izquierda */
+}
+
+.enlaces-pie a:nth-child(2) {
+    text-align: center;  /* Web Ayuntamiento PERFECTAMENTE al centro */
+}
+
+.enlaces-pie a:nth-child(3) {
+    text-align: right;   /* Aviso legal a la derecha */
+}
+
+.copyright {
+    font-size: 14px;
+    border-top: 1px solid #555;
+    padding-top: 10px;
+    text-align: right;
+}
+
+/* noticia.html */
+/* --- Redes Sociales Flotantes y título --- */
+.cabecera-noticia {
+    display: flex;
+    padding: 20px 0;
+}
+
+.redes-sociales {
+    position: fixed;    /* Se queda "pegado" al hacer scroll */
+    right: 50px;
+    top: 215px;           /* Distancia desde el borde superior de la pantalla al bajar */
+}
+
+.redes-sociales ul {
+    display: flex;       /* Los botones se ponen en horizontal */
+    gap: 10px;           /* Espacio entre botones */
+    list-style: none;
+}
+
+.boton-red {
+    padding: 8px 12px;
+    background-color: #004587; /*Para que sea un poco transparente y pueda verse el texto */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background 0.3s;   
+}
+
+.boton-red:hover {
+    background-color: #d3b50a;
+}
+
+/* --- Cuerpo de la Noticia y Datos Técnicos --- */
+.zona-detalle-noticia {
+    padding: 20px;
+}
+
+.datos-tecnicos {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-left: 5px solid #004587;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+
+.cuerpo-noticia p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom:10px;
+    color: #333;
+}
+
+/* --- Galería de Imágenes (Figure y Figcaption) --- */
+.galeria-noticia {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /*Separacion fotos*/
+    padding: 20px;
+}
+
+.foto img{
+    height: 300px; /*Alto exacto*/
+    margin-bottom: 8px;
+}
+
+.foto figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+    font-style: italic;
+    color: #666;
+}
+
+/*---Práctica 2 ---*/
+/* Área invisible a la derecha (20px de ancho) */
+#trigger-comentarios {
+    position: fixed;
+    right: 0;
+    top: 5%;
+    width: 20px;
+    height: 90%;
+}
+
+/* Panel de comentarios oculto */
+#panel-comentarios {
+    position: fixed;
+    right: -350px; /* Escondido a la derecha */
+    width: 350px;
+    height: 90%;
+    top:5%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
+    transition: right 0.4s ease; /* Animación suave */
+    z-index: 1002;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#panel-comentarios.abierto {
+    right: 0;
+}
+
+#btn-cerrar-panel {
+    position: absolute; /* Se posiciona respecto al panel */
+    top: 10px;          /* Distancia desde arriba */
+    right: 20px;        /* Distancia desde la derecha */
+    background: none;
+    border: none;
+    font-size: 28px;    /* Un poco más grande para que sea fácil de clicar */
+    font-weight: bold;
+    color: #333;
+    cursor: pointer; /*Hacer que el cursor se ponga la manita (botón)*/
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+#btn-cerrar-panel:hover {
+    color: #004587;    
+}
+
+/* Ajuste para que el título del panel no se solape con el botón */
+#panel-comentarios h2 {
+    margin-top: 10px;
+    padding-right: 30px; /* Deja espacio para la 'X' */
+    border-bottom: 2px solid #004587;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+/* Estilos de los comentarios individuales */
+.comentario-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.comentario-item .meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Formulario */
+#contenedor-formulario.oculto { display: none; }
+
+.botones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#form-comentario input, #form-comentario textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+ 
+#btn-enviar {
+    background-color: #004587;
+    color: white;
+    border-radius: 5px;
+    padding:5px;
+    border: none;
+    transition: background-color 0.3s ease;
+    height: 30px;
+    cursor: pointer;
+}
+
+#btn-nuevo-comentario {
+    width: 60%;
+    /*15px arriba/abajo, 20px lados */
+    padding: 12px 20px; 
+    
+    background-color: #004587;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    
+    font-size: 1.2rem;   
+    font-weight: 800;   /* Extra negrita */
+    letter-spacing: 1px;
+    
+    margin-top: 10px;    
+    margin-bottom: 20px; 
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra para darle relieve */
+}
+
+#btn-nuevo-comentario:hover {
+    background-color: #d3b50a;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+
+#btn-nuevo-comentario:hover {
+    background-color: #d3b50a;
+}
+
+#btn-enviar:hover {
+    background-color: #d3b50a;
+}
+
+/* --- Estilos Práctica 4: Usuarios y Formularios --- */
+
+.contenedor-formulario {
+    max-width: 500px;
+    margin: 40px auto; /* Centrado horizontal */
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border-top: 5px solid #004587; /* Detalle color corporativo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-formulario h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.formulario-estilo .campo {
+    margin-bottom: 20px;
+}
+
+.formulario-estilo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+.formulario-estilo input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.formulario-estilo input:focus {
+    outline: none;
+    border-color: #004587;
+    box-shadow: 0 0 5px rgba(0, 69, 135, 0.2);
+}
+
+.boton-registro {
+    width: 100%;
+    padding: 12px;
+    background-color: #004587;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.boton-registro:hover {
+    background-color: #d3b50a;
+}
+
+.enlace-secundario {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.enlace-secundario a {
+    color: #004587;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.enlace-secundario a:hover {
+    text-decoration: underline;
+}
+
+.contenedor-gestion { padding: 20px; }
+.tabla-gestion { width: 100%; margin-top: 10px; }
+.tabla-gestion th, .tabla-gestion td { 
+    padding: 12px; border: 1px solid #2f2d2d; text-align: left; 
+}
+.tabla-gestion th { background-color: #004587; color: white; }
+
+/* Estilos adicionales para gestión de noticias */
+.boton-gestion {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #d3b50a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.formulario-busqueda {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.formulario-busqueda input {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.formulario-busqueda button {
+    padding: 10px 20px;
+    background-color: #004587;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* --- Estilos para Moderación en Noticias --- */
+
+/* Contenedor de acciones junto al autor del comentario */
+.acciones-moderador {
+    font-size: 0.85rem;
+    margin-left: 15px;
+    margin-top:5px;
+    padding: 2px 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Enlaces de moderar (Borrar/Editar) */
+
+
+.editar {
+    color:#004587;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 5px;
+}
+
+.borrar {
+    color:#be0202;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 5px;
+}
+.acciones-moderador a:hover {
+    text-decoration: underline;
+}
+
+/* Nota de 'Editado por moderador' debajo del texto */
+.nota-editado {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+    border-top: 1px dashed #ccc;
+    padding-top: 4px;
+}
+
+/* Estilo para los comentarios (para que el meta sea flexible) */
+.comentario-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.formulario-estilo select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 1rem;
+}
+
+.formulario-estilo textarea {
+    width: 100%;       /* Ocupa todo el ancho disponible del contenedor */
+    min-height: 200px; /* Altura mínima inicial */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.alerta-exito {
+    background-color: #d4edda; /* Verde muy claro para el fondo */
+    color: #155724;            /* Verde oscuro para el texto */
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Gestión de imágenes en edición */
+.galeria-edicion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.foto-gestion {
+    text-align: center;
+    width: 100px;
+}
+
+.foto-gestion img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* Recorta la imagen para que sea cuadrada y uniforme */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.foto-gestion a {
+    color: #d32f2f;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Estilos específicos para mejorar la tabla de usuarios */
+.select-rol {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.enlace-borrar {
+    color: #d32f2f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.enlace-borrar:hover {
+    text-decoration: underline;
+}
+
+.tabla-gestion tr:hover {
+    background-color: #f9f9f9;
+}
+
+.enlace-secundario {
+    margin-top: 20px; 
+    text-align: center;
+}
+
+.subtitulo-gestion {
+    margin-bottom: 20px; 
+    color: #666;
+}
+
+/* Alerta de Error (Rojo) */
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Identificador para tu propio usuario */
+.user-propio {
+    color: #004587;
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
+
+/* Estado de la cuenta protegida (Root único o tú mismo) */
+.user-protegido {
+    color: #999;
+    font-style: italic;
+}
+
+/* Alineación para tablas vacías */
+.texto-centrado {
+    text-align: center;
+}
+
+/* --- BOTONES DE ACCIÓN EN VISTA NOTICIA --- */
+.acciones-noticia-directas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.boton-accion {
+    padding: 8px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.boton-accion.editar {
+    background-color: #004587;
+    color: white;
+}
+
+.boton-accion.eliminar {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.boton-accion:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.contenedor-hashtags {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.hashtag {
+    background-color: #e9ecef;
+    color: #004587;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s;
+}
+
+/* --- ESTILO UNIFICADO PARA BUSCADORES DE GESTIÓN --- */
+.seccion-busqueda {
+    margin-bottom: 20px;
+}
+
+.form-busqueda-doble {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center; /* Alineación vertical perfecta */
+    background: none;    /* Sin fondos grises */
+    padding: 0;
+}
+
+.grupo-busqueda {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grupo-busqueda label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.grupo-busqueda input {
+    padding: 7px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 250px; /* Un poco más ancho para comentarios */
+    transition: border-color 0.2s;
+}
+
+.grupo-busqueda input:focus {
+    border-color: #004587;
+    outline: none;
+}
+
+/* Botones estilo original corporativo */
+.boton-buscar {
+    background-color: #004587;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.boton-buscar:hover {
+    background-color: #002d57;
+}
+
+.boton-limpiar {
+    padding: 7px 15px;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.boton-limpiar:hover {
+    background-color: #e2e6ea;
+}
+
+.zona-peligro {
+    margin-top: 40px;
+    padding: 10px;
+    border: 1px solid #ebccd1;
+    border-radius: 5px;
+    background-color: #f2dede; /* Fondo rojizo suave */
+}
+
+.zona-peligro h3 {
+    color: #a94442;
+    margin-top: 0;
+}
+
+.form-eliminar-centro{
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+.boton-eliminar-cuenta {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.boton-eliminar-cuenta:hover {
+    background-color: #c9302c;
+}
+
+.principal_miperfil {
+    max-width: 800px; /* O el ancho que tenga tu formulario */
+    margin: 0 auto;   /* Centrado */
+}
+
+.alerta-peligro-extrema {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border-left: 5px solid #dc3545;
+    
+    /* CRÍTICO PARA EL DISEÑO: */
+    box-sizing: border-box; /* Asegura que el padding no sume ancho extra */
+    width: 100%;            /* Se ajusta al contenedor padre, no a la pantalla */
+    word-wrap: break-word;  /* Evita que el texto largo empuje las cajas */
+}
+
+/* --- ALERTAS DE LA PÁGINA DE LOGIN --- */
+.alerta-exito-login {
+    color: green;
+    background-color: #e6fffa;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid green;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.alerta-error-login {
+    color: red;
+    background-color: #ffeeee;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid red;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.contenedor-buscador-google {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+#buscador-google {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 24px; /* Estilo redondeado Google */
+    outline: none;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+}
+
+#desplegable-coincidencias {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0 0 8px 8px;
+    list-style: none;
+    margin: 4px 0 0 0;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: none; /* Se muestra solo cuando hay datos */
+}
+
+#desplegable-coincidencias li a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    text-align: left;
+}
+
+#desplegable-coincidencias li a:hover {
+    background-color: #f1f1f1;
+    color: #004587;
+}
+
+.modulo-portada-bloque {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.texto-centrado {
+    text-align: center;
+}
+
+.check-publicado {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #004587; /* Utiliza tu color corporativo azul para el check */
+}

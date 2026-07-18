@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>Iniciar Sesión</h2>
+
+    {# Mensaje de éxito tras registro #}
+    {% if registro_exito %}
+        <div class="alerta-exito-login">
+            ¡Registro completado con éxito! Ya puedes entrar.
+        </div>
+    {% endif %}
+
+    {# Mensaje de error de login #}
+    {% if error %}
+        <div class="alerta-error-login">
+            {{ error }}
+        </div>
+    {% endif %}
+    
+    <form action="login.php" method="POST" class="formulario-estilo">
+        <div class="campo">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="campo">
+            <label for="pass">Contraseña:</label>
+            <input type="password" id="pass" name="pass" required>
+        </div>
+
+        <button type="submit" class="boton-registro">Entrar</button>
+    </form>
+    
+    <div class="enlace-secundario">
+        ¿Aún no tienes cuenta? <a href="registro.php">Regístrate aquí</a>
+    </div>
+</div>
+{% endblock %}

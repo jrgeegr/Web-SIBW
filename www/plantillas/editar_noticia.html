@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>{% if noticia.id > 0 %}Editar Noticia{% else %}Nueva Noticia{% endif %}</h2>
+    
+    {% if mensaje %}
+        <div class="alerta-exito">
+            {{ mensaje }}
+        </div>
+    {% endif %}
+    
+    <form action="editar_noticia.php?id={{ noticia.id }}" method="POST" enctype="multipart/form-data" class="formulario-estilo">
+        
+        <div class="campo">
+            <label>Título de la noticia:</label>
+            <input type="text" name="titulo" value="{{ noticia.titulo }}" required>
+        </div>
+
+        <div class="campo">
+            <label>Fecha de publicación:</label>
+            <input type="date" name="fecha_pub" value="{{ noticia.fecha_pub }}" required>
+        </div>
+
+        <div class="campo">
+            <label>Tipo de incidente:</label>
+            <input type="text" name="tipo" value="{{ noticia.tipo }}" placeholder="Ej: Obra, Tráfico, Evento..." required>
+        </div>
+
+        <div class="campo">
+            <label for="lugar_nombre">Lugar / Localidad:</label>
+            <input type="text" 
+                id="lugar_nombre" 
+                name="lugar_nombre" 
+                value="{{ noticia.nombre_lugar }}" 
+                placeholder="Ej: Granada, Armilla..." 
+                required>
+        </div>
+        
+            
+        <div class="campo">
+            <label>Concejalía responsable:</label>
+            <input type="text" name="concejalia" value="{{ noticia.concejalia }}" required>
+        </div>
+
+        <div class="campo">
+            <label>Responsable:</label>
+            <input type="text" name="responsable" value="{{ noticia.responsable }}" required>
+        </div>
+
+        <div class="campo">
+            <label>Cuerpo de la noticia:</label>
+            <textarea name="cuerpo" rows="10" required>{{ noticia.cuerpo }}</textarea>
+        </div>
+
+        <div class="campo">
+            <label>Hashtags (separados por espacios o comas):</label>
+            <input type="text" name="hashtags" 
+                value="{{ noticia.hashtags_string }}" 
+                placeholder="ej: granada, obras, aviso">
+            <small>No es necesario incluir el símbolo #</small>
+        </div>
+
+        {% if noticia.id > 0 %}
+            <div class="campo">
+                <label>Imágenes actuales:</label>
+                <div class="galeria-edicion">
+                    {% for img in imagenes %}
+                        <div class="foto-gestion">
+                            <img src="{{ img.ruta_foto }}" alt="Miniatura">
+                            <a href="editar_noticia.php?id={{ noticia.id }}&borrar_img={{ img.id }}" 
+                            onclick="return confirm('¿Eliminar esta imagen?')">Eliminar</a>
+                        </div>
+                    {% else %}
+                        <p>No hay imágenes asociadas.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="campo">
+            <label>{% if noticia.id > 0 %}Añadir más imágenes:{% else %}Imágenes de la noticia:{% endif %}</label>
+            {# Fíjate en el name="fotos[]" y el atributo multiple #}
+            <input type="file" name="fotos[]" multiple>
+            <small>Puedes seleccionar varios archivos a la vez.</small>
+        </div>
+
+        <button type="submit" class="boton-registro">
+            {% if noticia.id > 0 %}Actualizar Noticia{% else %}Publicar Noticia{% endif %}
+        </button>
+    </form>
+    
+    <div class="enlace-secundario">
+        <a href="gestion_noticias.php">Volver al listado</a>
+    </div>
+</div>
+{% endblock %}

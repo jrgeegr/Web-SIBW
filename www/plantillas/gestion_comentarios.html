@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-gestion">
+    <h1>Gestión de Comentarios</h1>
+
+    {# Buscador #}
+    <div class="seccion-busqueda">
+        <form method="GET" action="gestion_comentarios.php" class="form-busqueda-doble">
+            <div class="grupo-busqueda">
+                <label for="buscar">Contenido:</label>
+                <input type="text" name="buscar" id="buscar" 
+                    value="{{ busqueda }}" placeholder="Buscar en comentarios...">
+            </div>
+            
+            <button type="submit" class="boton-buscar">Buscar</button>
+            <a href="gestion_comentarios.php" class="boton-limpiar">Limpiar</a>
+        </form>
+    </div>
+
+    <table class="tabla-gestion">
+        <thead>
+            <tr>
+                <th>Autor</th>
+                <th>Comentario</th>
+                <th>Noticia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in comentarios %}
+            <tr>
+                <td>{{ c.autor }}</td>
+                <td>{{ c.texto }} {% if c.editado_por_moderador %}<br><small>(Editado por moderador)</small>{% endif %}</td>
+                <td>{{ c.titulo_noticia }}</td>
+                <td>
+                    <a href="gestion_comentarios.php?borrar={{ c.id }}" onclick="return confirm('¿Borrar?')">Borrar</a>
+                    |
+                    <a href="editar_comentario.php?id={{ c.id }}">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="enlace-secundario">
+        <a href="portada.php">Volver a la Portada</a>
+    </div>
+</div>
+{% endblock %}

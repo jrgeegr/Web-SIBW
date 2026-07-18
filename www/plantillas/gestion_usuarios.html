@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="contenedor-gestion">
+    <h1>Gestión de Usuarios</h1>
+    <p class="subtitulo-gestion">Panel de administración de privilegios y cuentas.</p>
+
+    {# BLOQUE DE MENSAJES DE FEEDBACK #}
+    {% if mensaje_error %}
+        <div class="alerta-error">
+            {{ mensaje_error }}
+        </div>
+    {% endif %}
+
+    {% if mensaje_exito %}
+        <div class="alerta-exito">
+            {{ mensaje_exito }}
+        </div>
+    {% endif %}
+
+    {# TABLA DE USUARIOS #}
+    <table class="tabla-gestion">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Email</th>
+                <th>Rol del Usuario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in usuarios %}
+            <tr>
+                <td>
+                    <strong>{{ u.nombre_completo }}</strong>
+                    {% if u.id == session.user_id %}
+                        <span class="user-propio">(Tú)</span>
+                    {% endif %}
+                </td>
+                <td>{{ u.email }}</td>
+                <td>
+                    <form action="gestion_usuarios.php" method="POST" class="form-inline">
+                        <input type="hidden" name="id_usuario" value="{{ u.id }}">
+                        <input type="hidden" name="cambiar_rol" value="1">
+                        
+                        <select name="id_rol" onchange="this.form.submit()" class="select-rol">
+                            <option value="1" {% if u.id_rol == 1 %}selected{% endif %}>Root (Admin)</option>
+                            <option value="2" {% if u.id_rol == 2 %}selected{% endif %}>Gestor</option>
+                            <option value="3" {% if u.id_rol == 3 %}selected{% endif %}>Moderador</option>
+                            <option value="4" {% if u.id_rol == 4 %}selected{% endif %}>Registrado</option>
+                        </select>
+                    </form>
+                </td>
+                <td>
+                    {% if u.id != session.user_id or (u.id == session.user_id and total_roots>1)  %}
+                        <a href="gestion_usuarios.php?borrar={{ u.id }}" 
+                           class="enlace-borrar" 
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar permanentemente a {{ u.nombre_completo }}?')">
+                           Eliminar
+                        </a>
+                    {% else %}
+                        <span class="user-protegido">Protegido</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="texto-centrado">No hay usuarios registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="enlace-secundario">
+        <a href="portada.php" class="enlace-secundario">Volver a la Portada</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="principal_miperfil">
+    {% if error == 'ultimo_root' %}
+        <div class="alerta-peligro-extrema">
+            <strong>¡Acción denegada!</strong> No puedes eliminar tu cuenta porque eres el único administrador Root del sistema. Debes nombrar a otro Root antes de marcharte.
+        </div>
+    {% endif %}
+
+    <div class="contenedor-formulario">
+        <h2>Mis Datos Personales</h2>
+        {% if mensaje %}<p style="color: green; text-align: center;">{{ mensaje }}</p>{% endif %}
+        
+        <form action="mi_perfil.php" method="POST" class="formulario-estilo">
+            <div class="campo">
+                <label>Nombre Completo:</label>
+                <input type="text" name="nombre" value="{{ usuario.nombre_completo }}" required>
+            </div>
+            <div class="campo">
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ usuario.email }}" required>
+            </div>
+            <div class="campo">
+                <label>Nueva Contraseña (dejar vacío para no cambiar):</label>
+                <input type="password" name="pass" placeholder="********">
+            </div>
+            <button type="submit" class="boton-registro">Guardar Cambios</button>
+        </form>
+
+        
+        <div class="zona-peligro">
+            <form action="eliminar_mi_cuenta.php" method="POST" class="form-eliminar-centro" onsubmit="return confirm('¿Estás completamente seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')">
+                <button type="submit" class="boton-eliminar-cuenta">Eliminar mi cuenta</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

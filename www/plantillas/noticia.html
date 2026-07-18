@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ noticia.titulo }} - Detalles{% endblock %}
+
+{% block contenido %}
+<main class="zona-detalle-noticia">
+    {# BLOQUE DE ACCIONES RÁPIDAS #}
+    {% if session.user_rol == 'root' or session.user_rol == 'gestor' %}
+        <div class="acciones-noticia-directas">
+            <a href="editar_noticia.php?id={{ noticia.id }}" class="boton-accion editar">
+                <i></i> Editar Noticia
+            </a>
+            <a href="gestion_noticias.php?borrar={{ noticia.id }}" 
+               class="boton-accion eliminar" 
+               onclick="return confirm('¿Estás seguro de que quieres eliminar esta noticia permanentemente?')">
+                <i></i> Eliminar Noticia
+            </a>
+        </div>
+    {% endif %}
+
+    <header class="cabecera-noticia">
+        <h1>{{ noticia.titulo }}</h1>
+        <nav class="redes-sociales">
+            <ul>
+                <li><a href="#" class="boton-red">Tiktok</a></li>
+                <li class="red-social"><a href="#" class="boton-red">Instagram</a></li>
+                <li class="red-social"><a href="#" class="boton-red">Twitter</a></li>
+                <li class="red-social">
+                    <a href="noticia_imprimir.php?id={{ noticia.id }}" class="boton-red">Imprimir</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="cuerpo-noticia">
+        <div class="datos-tecnicos">
+            <p><strong>Fecha de publicación:</strong> {{ noticia.fecha_pub }}</p>
+            <p><strong>Tipo de incidente:</strong> {{ noticia.tipo }}</p>
+            <p><strong>Lugar:</strong> {{ noticia.nombre_lugar }}</p>
+            <p><strong>Concejalía:</strong> {{ noticia.concejalia }}</p>
+            <p><strong>Responsable:</strong> {{ noticia.responsable }}</p>
+        </div>
+        <hr><br>
+        
+        {# Usamos nl2br para que los saltos de línea del textarea se vean en el HTML #}
+        <p>{{ noticia.cuerpo | nl2br }}</p>
+
+        {# NUEVA SECCIÓN DE HASHTAGS #}
+        {% if hashtags %}
+            <div class="contenedor-hashtags">
+                {% for tag in hashtags %}
+                    <span class="hashtag">#{{ tag.nombre }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="galeria-noticia">
+        {% for img in imagenes %}
+            <figure class="foto">
+                <img src="{{ img.ruta_foto }}" alt="{{ img.titulo_foto }}">
+                <figcaption>{{ img.titulo_foto }}</figcaption>
+            </figure>
+        {% endfor %}
+    </section>
+</main>
+
+<aside id="panel-comentarios">
+    <button id="btn-cerrar-panel">×</button>
+    <h2>Comentarios</h2>
+    
+    <div id="contenedor-formulario" class="oculto">
+        <form id="form-comentario" method="POST" action="noticia.php?id={{ noticia.id }}">
+            {# Sugerencia: autocompletar nombre y email si hay sesión #}
+            <input type="text" name="autor" id="nombre" placeholder="Nombre" value="{{ session.user_nombre }}" required>
+            <input type="email" name="email" id="email" placeholder="E-mail" value="{{ session.user_email }}" required>
+            <textarea name="texto" id="texto-comentario" placeholder="Escribe tu comentario..." required></textarea>
+            
+            <div class="botones">
+                <button type="submit" id="btn-enviar">Enviar Comentario</button>
+                <button type="button" id="btn-cerrar-form">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    {% if session.user_id %}
+        <button id="btn-nuevo-comentario">¡COMENTA!</button>
+    {% else %}
+        <div class="aviso-login">
+            <p>Para dejar un comentario, por favor <a href="login.php">inicia sesión</a>.</p>
+        </div>
+    {% endif %}
+
+    <div id="lista-comentarios">
+        {% for com in comentarios %}
+            <div class="comentario-item">
+                <div class="meta">
+                    <strong>{{ com.autor }}</strong> - {{ com.fecha }}
+                    
+                    {% if puede_moderar %}
+                        <span class="acciones-moderador">
+                            <a class="editar" href="editar_comentario.php?id={{ com.id }}">Editar</a>
+                            | <a class="borrar" href="gestion_comentarios.php?borrar={{ com.id }}&ref=noticia&id_not={{ noticia.id }}" onclick="return confirm('¿Borrar comentario?')">Borrar</a>
+                        </span>
+                    {% endif %}
+                </div>
+                <p>{{ com.texto | nl2br }}</p>
+                
+                {# Aviso de edición #}
+                {% if com.editado_por_moderador %}
+                    <span class="nota-editado">Editado por moderador</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</aside>
+<div id="trigger-comentarios"></div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const localidadesCercanas = {{ localidades|json_encode|raw }};
+    </script>
+    <script src="js/comentarios.js" defer></script>
+{% endblock %}
