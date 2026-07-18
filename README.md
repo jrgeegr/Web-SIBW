@@ -17,32 +17,32 @@ El entorno está completamente virtualizado y aislado utilizando contenedores de
 
 ## 📋 Histórico de Desarrollo y Evolución del Sistema
 
-A lo largo del semestre académico, la plataforma ha atravesado un proceso de ingeniería incremental, evolucionando a través de las siguientes fases detalladas en los guiones docentes[cite: 3, 4, 5, 6, 7]:
+A lo largo del semestre académico, la plataforma ha atravesado un proceso de ingeniería incremental, evolucionando a través de las siguientes fases detalladas en los guiones docentes:
 
 ### 🎨 Práctica 1: Fundamentos de Interfaz y Diseño Estático (HTML5 y CSS3)
-*   **Maquetación Semántica:** Construcción y estructuración de la interfaz visual base (`portada.html`, `noticia.html`) aplicando etiquetas semánticas nativas de HTML5, evitando el uso de layouts obsoletos basados en tablas[cite: 7].
-*   **Layouts Avanzados (Grid & Flexbox):** Implementación combinada de CSS Grid Layouts para la distribución macroscópica de las vistas y la rejilla adaptativa de 4 columnas de la portada, junto con Flexbox para la alineación precisa de elementos internos y menús[cite: 7].
-*   **Hoja de Estilos de Impresión:** Creación del módulo `noticia_imprimir.html` reutilizando la estructura HTML original pero aplicando una hoja de estilos de medios (`@media print`) alternativa para mutar la interfaz en blanco y negro, con tipografías optimizadas, logotipos reubicados y ocultación estricta de elementos interactivos o redes sociales[cite: 7].
+*   **Maquetación Semántica:** Construcción y estructuración de la interfaz visual base (`portada.html`, `noticia.html`) aplicando etiquetas semánticas nativas de HTML5, evitando el uso de layouts obsoletos basados en tablas.
+*   **Layouts Avanzados (Grid & Flexbox):** Implementación combinada de CSS Grid Layouts para la distribución macroscópica de las vistas y la rejilla adaptativa de 4 columnas de la portada, junto con Flexbox para la alineación precisa de elementos internos y menús.
+*   **Hoja de Estilos de Impresión:** Creación del módulo `noticia_imprimir.html` reutilizando la estructura HTML original pero aplicando una hoja de estilos de medios (`@media print`) alternativa para mutar la interfaz en blanco y negro, con tipografías optimizadas, logotipos reubicados y ocultación estricta de elementos interactivos o redes sociales.
 
 ### ⚡ Práctica 2: Programación de Dinamismo del Lado del Cliente (JavaScript Nativo)
-*   **Manipulación del DOM y Eventos:** Inyección interactiva del panel de comentarios oculto mediante listeners de captura de eventos del ratón (`input`, `keyup`, `change`)[cite: 3].
-*   **Motores de Validación Front-End:** Diseño de algoritmos para verificar la presencia de campos obligatorios en los formularios de envío y validación sintáctica de direcciones de correo electrónico apoyándose en expresiones regulares (Regex) con diálogos modales de alerta[cite: 3].
-*   **Interactividad en Tiempo Real:** Implementación de un filtro corrector de texto en caliente que intercepta las entradas del usuario mientras teclea en el área de texto, contrastándolas contra un array parametrizado de localidades locales para convertirlas automáticamente a mayúsculas estrictas[cite: 3].
+*   **Manipulación del DOM y Eventos:** Inyección interactiva del panel de comentarios oculto mediante listeners de captura de eventos del ratón (`input`, `keyup`, `change`).
+*   **Motores de Validación Front-End:** Diseño de algoritmos para verificar la presencia de campos obligatorios en los formularios de envío y validación sintáctica de direcciones de correo electrónico apoyándose en expresiones regulares (Regex) con diálogos modales de alerta.
+*   **Interactividad en Tiempo Real:** Implementación de un filtro corrector de texto en caliente que intercepta las entradas del usuario mientras teclea en el área de texto, contrastándolas contra un array parametrizado de localidades locales para convertirlas automáticamente a mayúsculas estrictas.
 
 ### 🐘 Práctica 3: Arquitectura del Lado del Servidor e Introducción al Patrón MVC (PHP & Twig)
-*   **Motor de Plantillas Twig:** Migración completa de la estructura estática hacia un esquema modular estructurado bajo el patrón Modelo-Vista-Controlador (MVC), abstrayendo las plantillas mediante herencia y bloques, garantizando la ausencia total de código HTML en los archivos controladores PHP[cite: 6].
-*   **Persistencia Relacional Original:** Modelado y despliegue del esquema de base de datos relacional para indexar noticias en detalle, galerías fotográficas dinámicas y comentarios vinculados mediante claves foráneas[cite: 6].
-*   **Sanitización y Parámetros GET:** Implementación de las primeras capas de seguridad lógicas mediante el filtrado de variables superglobales `$_GET['id']` para repeler inyecciones de código SQL o inclusiones remotas de ficheros maliciosos[cite: 6].
+*   **Motor de Plantillas Twig:** Migración completa de la estructura estática hacia un esquema modular estructurado bajo el patrón Modelo-Vista-Controlador (MVC), abstrayendo las plantillas mediante herencia y bloques, garantizando la ausencia total de código HTML en los archivos controladores PHP.
+*   **Persistencia Relacional Original:** Modelado y despliegue del esquema de base de datos relacional para indexar noticias en detalle, galerías fotográficas dinámicas y comentarios vinculados mediante claves foráneas.
+*   **Sanitización y Parámetros GET:** Implementación de las primeras capas de seguridad lógicas mediante el filtrado de variables superglobales `$_GET['id']` para repeler inyecciones de código SQL o inclusiones remotas de ficheros maliciosos.
 
 ### 🔐 Práctica 4: Gestión Avanzada de Estado, Sesiones y Seguridad por Roles (PHP II)
-*   **Criptografía y Control de Sesiones:** Autenticación segura empleando funciones criptográficas (`password_hash` y `password_verify`) para el resguardo de credenciales en base de datos, persistidas mediante variables de `$_SESSION` seguras en el servidor[cite: 5].
-*   **Ecosistema de Roles y Privilegios:** Restricción estricta de accesos en base a cinco identidades (*Anónimo*, *Registrado*, *Moderador*, *Gestor* y *Superusuario/Root*), permitiendo la edición in-situ de contenidos y la moderación de aportes[cite: 5].
-*   **Buscadores de Panel de Control:** Diseño e integración del backend del panel de gestión con soporte para búsquedas combinadas multivariable dentro del cuerpo, título y hashtags asociados de los registros de noticias[cite: 5].
+*   **Criptografía y Control de Sesiones:** Autenticación segura empleando funciones criptográficas (`password_hash` y `password_verify`) para el resguardo de credenciales en base de datos, persistidas mediante variables de `$_SESSION` seguras en el servidor.
+*   **Ecosistema de Roles y Privilegios:** Restricción estricta de accesos en base a cinco identidades (*Anónimo*, *Registrado*, *Moderador*, *Gestor* y *Superusuario/Root*), permitiendo la edición in-situ de contenidos y la moderación de aportes.
+*   **Buscadores de Panel de Control:** Diseño e integración del backend del panel de gestión con soporte para búsquedas combinadas multivariable dentro del cuerpo, título y hashtags asociados de los registros de noticias.
 
 ### 🚀 Práctica 5: Componentización Asíncrona y Peticiones No Bloqueantes (AJAX & Fetch API)
-*   **Búsqueda Predictiva Desplegable:** Creación de un endpoint API dinámico en el servidor de portada que resuelve búsquedas con operadores `LIKE` y responde en formato JSON puro. El cliente captura los impulsos del teclado mandando peticiones con `fetch()` y reconstruyendo un listado de accesos flotantes en el DOM sin recargar la página[cite: 4].
-*   **Migración Asíncrona del Panel Administrativo:** Rediseño del formulario de triple criterio para interceptar el evento `submit` con `preventDefault()`, sustituyendo la tabla de gestión interna de forma fluida mediante inyecciones en caliente de plantillas de cadena lógicas[cite: 4].
-*   **Mutación de Estado Remota:** Adición de checkboxes en la tabla para alternar la visibilidad de publicación de contenidos. Utiliza delegación de eventos en JavaScript para notificar silenciosamente las actualizaciones a la base de datos a través de peticiones HTTP en segundo plano[cite: 4].
+*   **Búsqueda Predictiva Desplegable:** Creación de un endpoint API dinámico en el servidor de portada que resuelve búsquedas con operadores `LIKE` y responde en formato JSON puro. El cliente captura los impulsos del teclado mandando peticiones con `fetch()` y reconstruyendo un listado de accesos flotantes en el DOM sin recargar la página.
+*   **Migración Asíncrona del Panel Administrativo:** Rediseño del formulario de triple criterio para interceptar el evento `submit` con `preventDefault()`, sustituyendo la tabla de gestión interna de forma fluida mediante inyecciones en caliente de plantillas de cadena lógicas.
+*   **Mutación de Estado Remota:** Adición de checkboxes en la tabla para alternar la visibilidad de publicación de contenidos. Utiliza delegación de eventos en JavaScript para notificar silenciosamente las actualizaciones a la base de datos a través de peticiones HTTP en segundo plano.
 
 
 ## 📦 Estructura del Proyecto
