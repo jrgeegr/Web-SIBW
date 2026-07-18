@@ -36,3 +36,34 @@ El entorno está completamente virtualizado y aislado utilizando contenedores de
 ```
 
 ## 🔧 Instrucciones para el Despliegue Local y Puesta en Marcha
+Para levantar este proyecto en un entorno local de desarrollo y configurar la base de datos desde cero sin problemas de permisos, sigue escrupulosamente estos pasos en tu terminal Linux:
+1. **Clonar el proyecto y acceder al directorio.**
+```text
+git clone [https://github.com/tu-usuario/tu-repositorio.git](https://github.com/tu-usuario/tu-repositorio.git)
+cd tu-repositorio
+```
+2. **Configurar las variables de entorno locales**. Duplica la plantilla de configuración de Docker para inicializar tu entorno privado:
+```text
+cp .env.example .env
+```
+3. **Levantar la infraestructura de contenedores en segundo plano.**
+```text
+docker compose up -d
+```
+4. **Instalar dependencias del Backend** (Autoloader de Twig). Accede al entorno aislado del servidor web para descargar los componentes requeridos mediantes Composer:
+```text
+docker compose exec webserver composer install
+```
+5. **Configurar el motor de Base de Datos e Inicializar el esquema sibw**. Dado que el directorio binario data/mysql se ignora por seguridad, la primera vez que se ejecuta el comando up la base de datos nace completamente vacía. Para estructurarla de forma idéntica a la aplicación, conéctate al contenedor e inicializa el esquema:
+```text
+docker compose exec database mysql -u root -ptiger -e "CREATE DATABASE IF NOT EXISTS sibw;"
+```
+6. **Crear el usuario del sistema y conceder privilegios**. Asegúrate de comprobar en tu archivo www/conexion.php qué clave utiliza la función conectar() y reemplaza tu_contraseña_real_aqui por dicho valor:
+```text
+docker compose exec database mysql -u root -ptiger -e "CREATE USER IF NOT EXISTS 'sibwuser'@'%' IDENTIFIED BY 'tu_contraseña_real_aqui'; GRANT ALL PRIVILEGES ON sibw.* TO 'sibwuser'@'%'; FLUSH PRIVILEGES;"
+```
+7. **Poblar las tablas y volcar los datos de prueba**. Por último, inyecta el volcado estructurado .sql que se encuentra en la raíz del proyecto llamado "sibw.sql" en el motor MySQL del contenedor para rellenar los datos de la aplicación.
+```text
+docker compose exec -T database mysql -u root -ptiger sibw < sibw.sql
+```
+8. **¡Todo listo!**. Abre tu navegador web en ingresa en http://localhost/portada.php o en http://localhost:8080 para gestionar la BD.
