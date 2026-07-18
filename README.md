@@ -33,6 +33,6 @@ El entorno está completamente virtualizado y aislado utilizando contenedores de
 ├── .env.example                # Plantilla de variables de entorno globales
 ├── .gitignore                  # Exclusiones estrictas para un repositorio limpio
 └── docker-compose.yml          # Orquestación de los contenedores Docker
-.
+```
 
 ## 🔧 Instrucciones para el Despliegue Local y Puesta en Marcha
