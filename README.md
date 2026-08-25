@@ -97,3 +97,9 @@ docker compose exec database mysql -u root -ptiger -e "CREATE USER IF NOT EXISTS
 docker compose exec -T database mysql -u root -ptiger sibw < sibw.sql
 ```
 8. **¡Todo listo!**. Abre tu navegador web en ingresa en http://localhost/portada.php o en http://localhost:8080 para gestionar la BD.
+
+## 👩‍💻 Author
+
+**Jorge García Rubio**
+
+Computer Engineering Student (Software Engineering Track) - University of Granada (UGR).
